@@ -19,13 +19,15 @@ view: project_financials {
   }
 
   measure: revenue {
+    description: "Revenue on projects"
     type: sum
     sql: ${TABLE}.revenue ;;
     value_format_name: eur
   }
 
-  measure: project_costs {
-    label: "Project cost"
+  measure: internal_costs {
+    label: "Internal cost"
+    description: "The internal costs on projects (project cost budget from NetSuite)"
     type: sum
     sql: ${TABLE}.internal_costs ;;
     value_format_name: eur
@@ -33,6 +35,7 @@ view: project_financials {
 
   measure: freelance_costs {
     label: "Freelance cost"
+    description: "The cost of freelancers on projects"
     type: sum
     sql: ${TABLE}.external_costs ;;
     value_format_name: eur
@@ -40,8 +43,10 @@ view: project_financials {
 
   measure: net_revenue {
     label: "Net revenue"
+    description: "Revenue after deducting internal and freelance costs on projects"
     type: number
-    sql: ${revenue} - ${project_costs} - ${freelance_costs} ;;
+    sql: ${revenue} - ${internal_costs} - ${freelance_costs} ;;
+    value_format_name: eur
   }
 
 

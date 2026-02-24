@@ -90,6 +90,17 @@ view: project_item_revenue {
     ]
   }
 
+  measure: monthly_recurring_revenue {
+    label: "Monthly recurring revenue (MRR)"
+    description: "Revenue on project contract items that are billed monthly"
+    type: sum
+    sql: ${TABLE}.revenue ;;
+    value_format_name: eur
+    filters: [
+      billing_frequency: "Monthly"
+    ]
+  }
+
 
 
 
