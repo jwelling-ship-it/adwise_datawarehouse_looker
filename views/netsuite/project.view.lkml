@@ -13,6 +13,7 @@ view: project {
   }
 
   dimension_group: created {
+    description: "The date of creation for the project"
     type: time
     datatype: date
     timeframes: [date, month, quarter, year]
@@ -20,6 +21,7 @@ view: project {
   }
 
   dimension_group: start {
+    description: "The start date for the project"
     type: time
     datatype: date
     timeframes: [date, month, quarter, year]
@@ -27,6 +29,7 @@ view: project {
   }
 
   dimension_group: end {
+    description: "The end date for the project"
     type: time
     datatype: date
     timeframes: [date, month, quarter, year]

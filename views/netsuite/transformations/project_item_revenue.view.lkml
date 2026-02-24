@@ -32,6 +32,7 @@ view: project_item_revenue {
   }
 
   dimension_group: row {
+    description: "The date of project financial entry"
     type: time
     datatype: date
     timeframes: [date, month, quarter, year]

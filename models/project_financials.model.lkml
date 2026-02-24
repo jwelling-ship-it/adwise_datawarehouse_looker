@@ -40,6 +40,8 @@ explore: project_financials {
   description: "This explore shows the actual and forecasted financials on projects"
   view_label: "Financials"
 
+  sql_always_where: ${project_financials.subsidiary_id} = 4 ;;
+
   join: project {
     relationship: many_to_one
     type: left_outer

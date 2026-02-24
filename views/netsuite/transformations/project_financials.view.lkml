@@ -2,6 +2,7 @@ view: project_financials {
   sql_table_name: `adwise-fivetran.adwise_datawarehouse.project_financials`;;
 
   dimension_group: row {
+    description: "The date of the project financial entry"
     type: time
     datatype: date
     timeframes: [date, month, quarter, year]
@@ -16,6 +17,11 @@ view: project_financials {
   dimension: customer_id {
     hidden: yes
     sql: ${TABLE}.customer_id ;;
+  }
+
+  dimension: subsidiary_id {
+    hidden: yes
+    sql: ${TABLE}.subsidiary_id ;;
   }
 
   measure: revenue {
