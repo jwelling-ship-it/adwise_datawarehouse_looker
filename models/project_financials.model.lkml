@@ -3,55 +3,61 @@ connection: "adwise_fivetran"
 include: "/views/netsuite/*.view.lkml"
 include: "/views/netsuite/transformations/*.view.lkml"
 
-explore: project_item_revenue {
+explore: ns_project_item_revenue {
   view_label: "Revenue"
   description: "This explore shows the actual and forecasted revenue on project items"
   label: "Project Item Revenue"
 
-  sql_always_where: ${project_item_revenue.subsidiary_id} = 4 ;;
+  sql_always_where: ${ns_project_item_revenue.subsidiary_id} = 4 ;;
 
-  join: item {
+  join: ns_item {
+    view_label: "Item"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${project_item_revenue.item_id} = ${item.id} ;;
+    sql_on: ${ns_project_item_revenue.item_id} = ${ns_item.id} ;;
   }
 
-  join: project {
+  join: ns_project {
+    view_label: "Project"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${project_item_revenue.project_id} = ${project.id} ;;
+    sql_on: ${ns_project_item_revenue.project_id} = ${ns_project.id} ;;
   }
 
-  join: customer {
+  join: ns_customer {
+    view_label: "Customer"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${project_item_revenue.customer_id} = ${customer.id} ;;
+    sql_on: ${ns_project_item_revenue.customer_id} = ${ns_customer.id} ;;
   }
 
-  join: department {
+  join: ns_department {
+    view_label: "Department"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${project_item_revenue.department_id} = ${department.id} ;;
+    sql_on: ${ns_project_item_revenue.department_id} = ${ns_department.id} ;;
   }
 }
 
-explore: project_financials {
+explore: ns_project_financials {
   label: "Project Financials"
   description: "This explore shows the actual and forecasted financials on projects"
   view_label: "Financials"
 
-  sql_always_where: ${project_financials.subsidiary_id} = 4 ;;
+  sql_always_where: ${ns_project_financials.subsidiary_id} = 4 ;;
 
-  join: project {
+  join: ns_project {
+    view_label: "Project"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${project_financials.project_id} = ${project.id} ;;
+    sql_on: ${ns_project_financials.project_id} = ${ns_project.id} ;;
   }
 
-  join: customer {
+  join: ns_customer {
+    view_label: "Customer"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${project_financials.customer_id} = ${customer.id} ;;
+    sql_on: ${ns_project_financials.customer_id} = ${ns_customer.id} ;;
   }
 
 }

@@ -1,4 +1,4 @@
-view: customer {
+view: ns_customer {
   sql_table_name: `adwise-fivetran.fvt_netsuite2_datawarehouse.customer` ;;
 
   dimension: id {

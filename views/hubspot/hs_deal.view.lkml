@@ -1,4 +1,4 @@
-view: deal {
+view: hs_deal {
   sql_table_name: `adwise-fivetran.fvt_hubspot_datawarehouse.deal_company` ;;
 
   dimension: deal_id {
@@ -19,20 +19,10 @@ view: deal {
     sql: ${TABLE}.name ;;
   }
 
-  dimension_group: created_date {
-    label: "Created"
-    description: "The date of creation for the deal"
-    type: time
-    datatype: date
-    timeframes: [date, month, quarter, year]
-    sql: ${TABLE}.createddate ;;
-  }
-
   dimension_group: close_date {
     label: "Close"
     description: "The expected close date for the deal"
     type: time
-    datatype: date
     timeframes: [date, month, quarter, year]
     sql: ${TABLE}.closedate ;;
   }
@@ -61,7 +51,7 @@ view: deal {
   dimension: probability {
     description: "The probability of winning the deal in its current stage"
     type: number
-    sql: ${TABLE}.proability ;;
+    sql: ${TABLE}.probability ;;
     value_format_name: percent_0
   }
 

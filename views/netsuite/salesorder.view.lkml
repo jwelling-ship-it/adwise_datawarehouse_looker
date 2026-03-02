@@ -1,7 +1,0 @@
-view: salesorder {
-
-
-
-
-
-   }

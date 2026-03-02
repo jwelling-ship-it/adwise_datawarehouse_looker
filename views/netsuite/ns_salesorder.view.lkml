@@ -1,0 +1,7 @@
+view: ns_salesorder {
+
+
+
+
+
+   }

@@ -1,4 +1,4 @@
-view: customer {
+view: hs_customer {
   sql_table_name: `adwise-fivetran.fvt_hubspot_datawarehouse.company` ;;
 
   dimension: id {

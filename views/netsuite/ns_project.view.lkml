@@ -1,4 +1,4 @@
-view: project {
+view: ns_project {
   sql_table_name: `adwise-fivetran.fvt_netsuite2_datawarehouse.project` ;;
 
   dimension: id {

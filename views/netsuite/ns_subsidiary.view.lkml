@@ -1,4 +1,4 @@
-view: subsidiary {
+view: ns_subsidiary {
   sql_table_name: `adwise-fivetran.df_dev_looks.adwi_look_subsidiary`;;
 
   dimension: id {

@@ -1,4 +1,4 @@
-view: department {
+view: ns_department {
   sql_table_name: `adwise-fivetran.fvt_netsuite2_datawarehouse.department` ;;
 
   dimension: id {

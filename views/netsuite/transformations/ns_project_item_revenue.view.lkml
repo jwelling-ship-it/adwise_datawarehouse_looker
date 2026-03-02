@@ -1,4 +1,4 @@
-view: project_item_revenue {
+view: ns_project_item_revenue {
   sql_table_name: `adwise-fivetran.adwise_datawarehouse.project_item_revenue` ;;
 
   dimension: charge_id {
