@@ -23,6 +23,17 @@ explore: hs_deal_lines {
     sql_on: ${hs_deal_lines.deal_id} = ${hs_deal.deal_id} ;;
   }
 
+  join: hs_deal_probability {
+    view_label: "Deal Win Probability"
+    relationship: many_to_one
+    sql_on: ${hs_deal_lines.deal_id} = ${hs_deal_probability.deal_id} ;;
+  }
+
+  join: hs_deal_probability_explainability {
+    relationship: one_to_many
+    sql_on: ${hs_deal_probability.deal_id} = ${hs_deal_probability_explainability.deal_id} ;;
+  }
+
   join: hs_item {
     view_label: "Item"
     relationship: many_to_one

@@ -16,7 +16,7 @@ view: hs_deal {
     label: "Deal"
     description: "Name of the deal"
     type: string
-    sql: ${TABLE}.name ;;
+    sql: ${TABLE}.dealname ;;
   }
 
   dimension_group: close_date {
