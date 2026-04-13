@@ -12,7 +12,9 @@ view: hs_deal_probability {
     value_format_name: percent_1
     drill_fields: [
       hs_deal_probability_explainability.feature_label,
-      hs_deal_probability_explainability.attribution
+      hs_deal_probability_explainability.feature_value,
+      hs_deal_probability_explainability.attribution,
+      hs_deal_probability_explainability.impact_tier
     ]
   }
 
