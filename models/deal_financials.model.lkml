@@ -24,7 +24,7 @@ explore: hs_deal_lines {
   }
 
   join: hs_deal_probability {
-    view_label: "Deal Win Probability"
+    view_label: "Win Probability Model"
     relationship: many_to_one
     sql_on: ${hs_deal_lines.deal_id} = ${hs_deal_probability.deal_id} ;;
   }

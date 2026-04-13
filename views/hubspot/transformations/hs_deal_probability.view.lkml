@@ -8,6 +8,7 @@ view: hs_deal_probability {
 
   measure: probability  {
     type: max
+    description: "The probability of the deal being won in its close month"
     sql: ${TABLE}.win_probability;;
     value_format_name: percent_1
     drill_fields: [
@@ -18,11 +19,26 @@ view: hs_deal_probability {
     ]
   }
 
-  measure: weighted_pipeline {
-    type: sum
-    sql: ${TABLE}.expected_value;;
-    value_format_name: eur_0
+  dimension: checkup_label {
+    label: "Checkup"
+    description: "Flags deals where ML probability significantly diverges from HubSpot's stage probability"
+    type: string
+    sql:
+    CASE
+      WHEN ABS(${TABLE}.win_probability - ${hs_deal.probability}) <= 0.10
+        THEN '✅ Aligned'
+      WHEN ${TABLE}.win_probability - ${hs_deal.probability} < -0.20
+        THEN '🔴 Urgent Review'
+      WHEN ${TABLE}.win_probability - ${hs_deal.probability} BETWEEN -0.20 AND -0.10
+        THEN '⚠️ At Risk'
+      WHEN ${TABLE}.win_probability - ${hs_deal.probability} > 0.20
+        THEN '💎 Hidden Gem'
+      WHEN ${TABLE}.win_probability - ${hs_deal.probability} BETWEEN 0.10 AND 0.20
+        THEN '👀 Undervalued'
+    END ;;
   }
+
+
 
 
 
