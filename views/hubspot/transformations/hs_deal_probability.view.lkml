@@ -3,6 +3,7 @@ view: hs_deal_probability {
 
   dimension: deal_id {
     primary_key: yes
+    type: number
     sql: ${TABLE}.deal_id ;;
   }
 
@@ -12,6 +13,7 @@ view: hs_deal_probability {
     sql: ${TABLE}.win_probability;;
     value_format_name: percent_1
     drill_fields: [
+      hs_deal_probability.deal_id,
       hs_deal_probability_explainability.feature_label,
       hs_deal_probability_explainability.feature_value,
       hs_deal_probability_explainability.attribution,

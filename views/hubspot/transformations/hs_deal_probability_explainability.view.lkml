@@ -23,8 +23,8 @@ view: hs_deal_probability_explainability {
   }
 
   dimension: feature_name {
-    label: "Feature (technical)"
     hidden: yes
+    label: "Feature (technical)"
     type: string
     sql: ${TABLE}.feature_name ;;
   }
