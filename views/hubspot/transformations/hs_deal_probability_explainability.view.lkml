@@ -9,7 +9,6 @@ view: hs_deal_probability_explainability {
   }
 
   dimension: deal_id {
-    type: number
     hidden: yes
     sql: ${TABLE}.deal_id ;;
   }

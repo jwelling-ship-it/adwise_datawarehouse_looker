@@ -3,7 +3,6 @@ view: hs_deal_probability {
 
   dimension: deal_id {
     primary_key: yes
-    type: number
     sql: ${TABLE}.deal_id ;;
   }
 
@@ -13,7 +12,6 @@ view: hs_deal_probability {
     sql: ${TABLE}.win_probability;;
     value_format_name: percent_1
     drill_fields: [
-      hs_deal_probability.deal_id,
       hs_deal_probability_explainability.feature_label,
       hs_deal_probability_explainability.feature_value,
       hs_deal_probability_explainability.attribution,
@@ -29,14 +27,11 @@ view: hs_deal_probability {
     CASE
       WHEN ABS(${TABLE}.win_probability - ${hs_deal.probability}) <= 0.10
         THEN '✅ Aligned'
-      WHEN ${TABLE}.win_probability - ${hs_deal.probability} < -0.20
-        THEN '🔴 Urgent Review'
-      WHEN ${TABLE}.win_probability - ${hs_deal.probability} BETWEEN -0.20 AND -0.10
-        THEN '⚠️ At Risk'
-      WHEN ${TABLE}.win_probability - ${hs_deal.probability} > 0.20
+      WHEN ${TABLE}.win_probability - ${hs_deal.probability} < -0.10
+        THEN '🔴 Review'
+      WHEN ${TABLE}.win_probability - ${hs_deal.probability} > 0.10
         THEN '💎 Hidden Gem'
-      WHEN ${TABLE}.win_probability - ${hs_deal.probability} BETWEEN 0.10 AND 0.20
-        THEN '👀 Undervalued'
+
     END ;;
   }
 
