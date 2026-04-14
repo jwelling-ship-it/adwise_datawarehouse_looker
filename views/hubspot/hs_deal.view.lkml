@@ -17,10 +17,6 @@ view: hs_deal {
     description: "Name of the deal"
     type: string
     sql: ${TABLE}.dealname ;;
-    link: {
-      label: "Open in HubSpot"
-      url: "https://app.hubspot.com/contacts/139703519/record/0-3/{{ deal_id }}"
-    }
   }
 
   dimension_group: close_date {

@@ -19,6 +19,13 @@ view: hs_deal_probability {
     ]
   }
 
+  measure: probability_difference {
+    description: "Probability difference between Model and HubSpot"
+    type: sum
+    sql: ${TABLE}.win_probability - ${hs_deal.probability} ;;
+    value_format_name: percent_0
+  }
+
   dimension: checkup_label {
     label: "Checkup"
     description: "Flags deals where ML probability significantly diverges from HubSpot's stage probability"
