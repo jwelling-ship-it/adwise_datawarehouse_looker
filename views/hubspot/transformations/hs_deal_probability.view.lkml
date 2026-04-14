@@ -30,7 +30,7 @@ view: hs_deal_probability {
       WHEN ${TABLE}.win_probability - ${hs_deal.probability} < -0.10
         THEN '🔴 Review'
       WHEN ${TABLE}.win_probability - ${hs_deal.probability} > 0.10
-        THEN '💎 Hidden Gem'
+        THEN '💎 Undervalued'
 
     END ;;
   }
