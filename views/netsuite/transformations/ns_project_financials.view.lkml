@@ -1,5 +1,5 @@
 view: ns_project_financials {
-  sql_table_name: `adwise-fivetran.adwise_datawarehouse.project_financials`;;
+  sql_table_name: `adwise-fivetran.adwise_datawarehouse.fact_project_financials_monthly`;;
 
   dimension_group: row {
     description: "The date of the project financial entry"

@@ -1,5 +1,5 @@
 view: ns_project_item_revenue {
-  sql_table_name: `adwise-fivetran.adwise_datawarehouse.project_item_revenue` ;;
+  sql_table_name: `adwise-fivetran.adwise_datawarehouse.fact_project_item_revenue_monthly` ;;
 
   dimension: charge_id {
     hidden: yes
