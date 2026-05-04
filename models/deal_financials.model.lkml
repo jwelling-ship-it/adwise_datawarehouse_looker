@@ -13,7 +13,7 @@ explore: hs_deal_lines {
     view_label: "Customer"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${hs_deal_lines.company_id} = ${hs_customer.id} ;;
+    sql_on: CAST((${hs_deal_lines.company_id}) AS STRING) = CAST((${hs_customer.id}) AS STRING) ;;
   }
 
   join: hs_deal {
@@ -38,7 +38,7 @@ explore: hs_deal_lines {
     view_label: "Item"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${hs_deal_lines.item_id} = ${hs_item.id} ;;
+    sql_on: CAST((${hs_deal_lines.lineitem_id}) AS STRING) = CAST((${hs_item.id}) AS STRING) ;;
   }
 
   join: ns_item {
@@ -52,8 +52,7 @@ explore: hs_deal_lines {
     view_label: "Department"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${hs_item.department_id} = ${ns_department.id} ;;
-  }
+    sql_on: CAST((${hs_item.departmentid}) AS STRING) = CAST((${ns_department.id}) AS STRING) ;;  }
 
 
 }

@@ -35,7 +35,7 @@ explore: ns_project_item_revenue {
     view_label: "Department"
     relationship: many_to_one
     type: left_outer
-    sql_on: ${ns_project_item_revenue.department_id} = ${ns_department.id} ;;
+    sql_on: CAST((${ns_project_item_revenue.department_id}) AS STRING) = CAST((${ns_department.id}) AS STRING) ;;
   }
 }
 

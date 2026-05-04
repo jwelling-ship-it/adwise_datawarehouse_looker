@@ -6,9 +6,9 @@ dimension: deal_id {
   sql: ${TABLE}.dealid ;;
 }
 
-dimension: item_id {
+dimension: lineitem_id {
   hidden: yes
-  sql: ${TABLE}.itemid ;;
+  sql: ${TABLE}.lineitemid ;;
 }
 
 dimension: company_id {

@@ -12,7 +12,7 @@ view: hs_item {
     sql: ${TABLE}.sku ;;
   }
 
-  dimension: department_id {
+  dimension: departmentid {
     hidden: yes
     sql: ${TABLE}.departmentid ;;
   }

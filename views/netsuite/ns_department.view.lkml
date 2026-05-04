@@ -4,7 +4,7 @@ view: ns_department {
   dimension: id {
     hidden: yes
     primary_key: yes
-    sql: ${TABLE}.id ;;
+    sql: CAST((${TABLE}.id) AS STRING) ;;
   }
 
   dimension: department_name {
