@@ -14,12 +14,17 @@ view: ns_customer {
 
   dimension: salesrep_id {
     hidden: yes
-    sql: ${TABLE}.salesrep ;;
+    sql: ${TABLE}.salesrep_local ;;
   }
 
   dimension: customer_name {
     label: "Customer"
     sql: ${TABLE}.companyname ;;
+  }
+
+  measure: count {
+    type: count_distinct
+    sql: ${id} ;;
   }
 
    }

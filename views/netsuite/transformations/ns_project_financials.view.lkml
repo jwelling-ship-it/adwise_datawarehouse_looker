@@ -55,6 +55,12 @@ view: ns_project_financials {
     value_format_name: eur
   }
 
+  measure: count {
+    label: "# Customers"
+    type: count_distinct
+    sql: ${customer_id} ;;
+  }
+
 
 
 

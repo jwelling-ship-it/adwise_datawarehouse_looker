@@ -5,8 +5,8 @@ include: "/views/netsuite/transformations/*.view.lkml"
 
 explore: ns_project_item_revenue {
   view_label: "Revenue"
-  description: "This explore shows the actual and forecasted revenue on project items"
-  label: "Project Item Revenue"
+  description: "This explore shows the actual and forecasted revenue on project items (sub-items on packages aggregated)"
+  label: "Project - Item Revenue"
 
   sql_always_where: ${ns_project_item_revenue.subsidiary_id} = 4 ;;
 
@@ -40,8 +40,8 @@ explore: ns_project_item_revenue {
 }
 
 explore: ns_project_financials {
-  label: "Project Financials"
-  description: "This explore shows the actual and forecasted financials on projects"
+  label: "Project - Total Financials"
+  description: "This explore shows the total actual and forecasted financials on projects"
   view_label: "Financials"
 
   sql_always_where: ${ns_project_financials.subsidiary_id} = 4 ;;

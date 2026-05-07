@@ -18,12 +18,17 @@ view: ns_project_item_revenue {
 
   dimension: department_id {
     hidden: yes
-    sql: ${TABLE}.department_id ;;
+    sql: ${TABLE}.effective_department_id ;;
   }
 
   dimension: item_id {
     hidden: yes
-    sql: ${TABLE}.item_id ;;
+    sql: ${TABLE}.effective_item_id ;;
+  }
+
+  dimension: groupitem_id {
+    hidden: yes
+    sql: ${TABLE}.groupitem_id ;;
   }
 
   dimension: subsidiary_id {
@@ -100,6 +105,13 @@ view: ns_project_item_revenue {
     filters: [
       billing_frequency: "Monthly"
     ]
+  }
+
+  measure: count_customers {
+    label: "# Customers"
+    type: count_distinct
+    sql: ${customer_id} ;;
+    drill_fields: [ns_customer.customer_name, ns_project_product_revenue.item_revenue]
   }
 
 
