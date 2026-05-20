@@ -22,10 +22,16 @@ view: ns_item {
     }
   }
 
+  dimension: product_type {
+    label: "Product type"
+    type: string
+    sql: ${TABLE}.producttype ;;
+  }
+
   dimension: item_type {
     label: "Item type"
     type: string
-    sql: ${TABLE}.producttype ;;
+    sql: ${TABLE}.itemtype ;;
   }
 
   dimension: contract_item {
@@ -77,5 +83,10 @@ view: ns_item {
     type: number
     sql: SAFE_DIVIDE(${base_price} - ${cost_price}, ${base_price}) ;;
     value_format_name: percent_1
+  }
+
+  measure: count_distinct {
+    type: count_distinct
+    sql: ${id} ;;
   }
    }

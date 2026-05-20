@@ -55,6 +55,28 @@ view: ns_project_financials {
     value_format_name: eur
   }
 
+  measure: net_revenue_mom {
+    label: "Net revenue (MoM %)"
+    type: period_over_period
+    description: "Net revenue compared to last month in percentage"
+    based_on: net_revenue
+    based_on_time: row_month
+    period: month
+    kind: relative_change
+    value_format_name: percent_0
+  }
+
+  measure: net_revenue_yoy {
+    label: "Net revenue (YoY %)"
+    type: period_over_period
+    description: "Net revenue compared to last year in percentage"
+    based_on: net_revenue
+    based_on_time: row_year
+    period: year
+    kind: relative_change
+    value_format_name: percent_0
+  }
+
   measure: count {
     label: "# Customers"
     type: count_distinct
