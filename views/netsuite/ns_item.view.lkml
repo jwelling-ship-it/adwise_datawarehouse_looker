@@ -88,5 +88,6 @@ view: ns_item {
   measure: count_distinct {
     type: count_distinct
     sql: ${id} ;;
+    drill_fields: [ns_item.item_name]
   }
    }

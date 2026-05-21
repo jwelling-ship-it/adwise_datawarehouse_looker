@@ -81,9 +81,7 @@ view: ns_project_financials {
     label: "# Customers"
     type: count_distinct
     sql: ${customer_id} ;;
+    drill_fields: [ns_customer.customer_name, ns_project_financials.net_revenue]
   }
-
-
-
 
   }

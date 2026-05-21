@@ -111,7 +111,7 @@ view: ns_project_item_revenue {
     label: "# Customers"
     type: count_distinct
     sql: ${customer_id} ;;
-    drill_fields: [ns_customer.customer_name, ns_project_product_revenue.item_revenue]
+    drill_fields: [ns_customer.customer_name, ns_item.item_name, ns_project_product_revenue.item_revenue]
   }
 
 
