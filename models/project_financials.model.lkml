@@ -31,6 +31,13 @@ explore: ns_project_item_revenue {
     sql_on: ${ns_project_item_revenue.customer_id} = ${ns_customer.id} ;;
   }
 
+  join: ns_employee {
+    view_label: "Employee"
+    relationship: many_to_one
+    type: left_outer
+    sql_on: ${ns_customer.salesrep_id} = ${ns_employee.employee_id} ;;
+  }
+
   join: ns_department {
     view_label: "Department"
     relationship: many_to_one

@@ -21,6 +21,11 @@ dimension: department_id {
   sql: ${TABLE}.department_id ;;
 }
 
+dimension: owner_id {
+  hidden: yes
+  sql: ${TABLE}.owner ;;
+}
+
 dimension_group: close_date {
   label: "Close"
   description: "The expected close date of the deal"

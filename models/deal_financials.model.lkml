@@ -16,6 +16,19 @@ explore: hs_deal_lines {
     sql_on: CAST((${hs_deal_lines.company_id}) AS STRING) = CAST((${hs_customer.id}) AS STRING) ;;
   }
 
+  join: hs_owner {
+    relationship: many_to_one
+    type: left_outer
+    sql_on: ${hs_deal_lines.owner_id} = ${hs_owner.id} ;;
+  }
+
+  join: ns_employee {
+    view_label: "Employee"
+    relationship: one_to_one
+    type: left_outer
+    sql_on: ${hs_owner.email} = ${ns_employee.email} ;;
+  }
+
   join: hs_deal {
     view_label: "Deal"
     relationship: many_to_one

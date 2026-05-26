@@ -22,6 +22,11 @@ view: ns_customer {
     sql: ${TABLE}.companyname ;;
   }
 
+  dimension: industry {
+    label: "Industry"
+    sql: ${TABLE}.industry ;;
+  }
+
   measure: count {
     type: count_distinct
     sql: ${id} ;;

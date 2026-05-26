@@ -7,6 +7,16 @@ view: hs_customer {
     sql: ${TABLE}.id ;;
   }
 
+  dimension: owner_id {
+    hidden: yes
+    sql: ${TABLE}.owner_id ;;
+  }
+
+  dimension: netsuite_id {
+    hidden: yes
+    sql: ${TABLE}.netsuite_customer_id ;;
+  }
+
   dimension: company_name {
     label: "Company"
     type: string
@@ -33,9 +43,5 @@ view: hs_customer {
     type: string
     sql: ${TABLE}.salestype ;;
   }
-
-
-
-
 
    }
