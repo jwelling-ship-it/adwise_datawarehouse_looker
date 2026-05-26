@@ -63,4 +63,12 @@ measure: weighted_amount {
   sql: ${TABLE}.weighted_amount ;;
   value_format_name: eur
 }
+
+measure: weighted_contract_value {
+  label: "Weighted contract value"
+  description: "The weighted sum of the total contract value of the items based on deal probability"
+  type: sum
+  sql: ${TABLE}.weighted_contract_value ;;
+  value_format_name: eur
+}
  }
