@@ -2,7 +2,7 @@ view: hs_customer {
   sql_table_name: `adwise-fivetran.fvt_hubspot_datawarehouse.company` ;;
 
   dimension: id {
-    hidden: yes
+    label: "Customer ID (HubSpot)"
     primary_key: yes
     sql: ${TABLE}.id ;;
   }
@@ -13,8 +13,10 @@ view: hs_customer {
   }
 
   dimension: netsuite_id {
-    hidden: yes
+    label: "NetSuite ID"
+    type: number
     sql: ${TABLE}.netsuite_customer_id ;;
+    value_format_name: id
   }
 
   dimension: company_name {
@@ -32,7 +34,7 @@ view: hs_customer {
     label: "First order"
     description: "The first order date of the customer. Empty if the company has never placed an order"
     type: time
-    datatype: date
+    datatype: datetime
     timeframes: [date, month, quarter, year]
     sql: ${TABLE}.firstorderdate ;;
   }
