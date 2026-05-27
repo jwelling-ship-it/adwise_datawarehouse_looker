@@ -102,3 +102,22 @@ explore: ns_project_financials {
   }
 
 }
+
+explore: ns_forecast_vs_actuals {
+  label: "Project - Labor Forecast vs Actuals"
+  description: "This explore shows the difference between forecasted labor revenue / gross margin and the actuals"
+  view_label: "Financials"
+  join: ns_customer {
+    view_label: "Customer"
+    relationship: many_to_one
+    type: left_outer
+    sql_on: ${ns_forecast_vs_actuals.customer_id} = ${ns_customer.id} ;;
+  }
+
+  join: ns_department {
+    view_label: "Department"
+    relationship: many_to_one
+    type: left_outer
+    sql_on: ${ns_forecast_vs_actuals.department_id} = ${ns_department.id} ;;
+}
+}
