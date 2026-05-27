@@ -3,14 +3,24 @@ view: ns_department {
 
   dimension: id {
     hidden: yes
+    type: number
     primary_key: yes
-    sql: CAST((${TABLE}.id) AS STRING) ;;
+    sql: ${TABLE}.id ;;
+    value_format_name: id
   }
+
+  dimension: parent_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.parent ;;
+    value_format_name: id
+  }
+
 
   dimension: department_name {
     label: "Department"
     type: string
-    sql: ${TABLE}.parent_name ;;
+    sql:  REPLACE(${TABLE}.parent_name, '&', 'and') ;;
   }
 
   dimension: sub_department_name {

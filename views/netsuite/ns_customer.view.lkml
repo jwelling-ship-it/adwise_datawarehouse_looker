@@ -2,9 +2,11 @@ view: ns_customer {
   sql_table_name: `adwise-fivetran.fvt_netsuite2_datawarehouse.customer` ;;
 
   dimension: id {
-    hidden: yes
+    label: "Customer ID"
+    type: number
     primary_key: yes
     sql: ${TABLE}.id ;;
+    value_format_name: id
   }
 
   dimension: industry_id {
