@@ -19,6 +19,13 @@ view: hs_deal_probability {
     ]
   }
 
+  measure: weighted_amount {
+    label: "Weighted amount"
+    type: sum
+    sql: ${TABLE}.weighted_amount ;;
+    value_format_name: eur
+  }
+
   measure: probability_difference {
     description: "Probability difference between Model and HubSpot"
     type: sum
