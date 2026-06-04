@@ -23,4 +23,8 @@ view: hs_contact {
     sql: ${TABLE}.lead_source ;;
   }
 
+  dimension: company {
+    sql: ${TABLE}.companyname ;;
+  }
+
 }

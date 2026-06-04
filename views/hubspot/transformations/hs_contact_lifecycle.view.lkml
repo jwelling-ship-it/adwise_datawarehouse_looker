@@ -46,7 +46,7 @@ view: hs_contact_lifecycle {
   measure: count {
     type: count_distinct
     sql: ${contact_id} ;;
-    drill_fields: [contact_id, contact.contact_name, contact.contact_email, contact.contact_company, contact_lifecycle.lead_source]
+    drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.source]
   }
 
   measure: mql_count {
@@ -54,7 +54,7 @@ view: hs_contact_lifecycle {
     label: "# MQL"
     sql: ${contact_id};;
     filters: [stage: "MQL"]
-    drill_fields: [contact_id, contact.contact_name, contact.contact_email, contact.contact_company, contact_lifecycle.source]
+    drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.company, hs_contact_lifecycle.source]
   }
 
   measure: sql_count {
@@ -62,7 +62,7 @@ view: hs_contact_lifecycle {
     label: "# SQL"
     sql: ${contact_id};;
     filters: [stage: "SQL"]
-    drill_fields: [contact_id, contact.contact_name, contact.contact_email, contact.contact_company, contact_lifecycle.source]
+    drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.company, hs_contact_lifecycle.source]
   }
 
 }
