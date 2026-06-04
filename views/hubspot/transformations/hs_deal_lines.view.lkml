@@ -26,6 +26,12 @@ dimension: owner_id {
   sql: ${TABLE}.owner ;;
 }
 
+dimension: contact_id {
+  hidden: yes
+  sql: ${TABLE}.primary_contact_id ;;
+}
+
+
 dimension_group: close_date {
   label: "Close"
   description: "The expected close date of the deal"
