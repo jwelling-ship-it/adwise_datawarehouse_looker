@@ -46,4 +46,9 @@ view: hs_customer {
     sql: ${TABLE}.salestype ;;
   }
 
+  measure: count {
+    type: count_distinct
+    sql: ${TABLE}.id ;;
+  }
+
    }

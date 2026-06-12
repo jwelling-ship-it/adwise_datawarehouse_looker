@@ -22,6 +22,16 @@ view: ns_item {
     }
   }
 
+  dimension: item_displayname {
+    label: "Item display name"
+    type: string
+    sql: ${TABLE}.displayname ;;
+    link: {
+      label: "Netsuite item page"
+      url: "https://3883209.app.netsuite.com/app/common/item/item.nl?id={{ id }}"
+    }
+  }
+
   dimension: product_type {
     label: "Product type"
     type: string
