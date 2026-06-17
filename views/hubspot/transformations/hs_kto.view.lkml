@@ -18,32 +18,28 @@ view: hs_kto {
     timeframes: [date, month, quarter, year]
     datatype: date
     sql: ${TABLE}.response_month ;;
-    description: "Maand waarin de KTO-respons is ontvangen (DATE_TRUNC op response_month)."
   }
 
   dimension: firstname {
     type: string
     sql: ${TABLE}.firstname ;;
-    label: "Voornaam"
+    hidden: yes
   }
 
   dimension: lastname {
     type: string
     sql: ${TABLE}.lastname ;;
-    label: "Achternaam"
+    hidden: yes
   }
 
   dimension: full_name {
     type: string
     sql: CONCAT(COALESCE(${TABLE}.firstname, ''), ' ', COALESCE(${TABLE}.lastname, '')) ;;
-    label: "Naam"
-    description: "Volledige naam van de contactpersoon."
   }
 
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
-    label: "E-mail"
   }
 
   dimension: company_id {
@@ -51,7 +47,6 @@ view: hs_kto {
     type: string
     sql: CAST(${TABLE}.company_id AS STRING) ;;
     label: "Company ID (HubSpot)"
-    description: "HubSpot company ID — gebruik voor join met company view."
   }
 
   # -------------------------------------------------------------------------
@@ -61,15 +56,14 @@ view: hs_kto {
   measure: count_respondenten {
     type: count_distinct
     sql: ${TABLE}.contact_id ;;
-    label: "Respondenten"
-    description: "Aantal unieke contactpersonen dat de KTO heeft ingevuld."
+    label: "# Respondents"
   }
 
   measure: avg_kto {
     type: average
     sql: ${TABLE}.kto_score ;;
-    label: "Gem. NPS score"
-    description: "Gemiddelde NPS score over alle respondenten. NPS = (communicatie + impact + aanbevelen) / 3."
+    label: "Avg. NPS score"
+    description: "Average NPS score across alle respondenten. NPS = (communicatie + impact + aanbeveling) / 3."
     value_format: "0.00"
     group_label: "NPS Scores"
     drill_fields: [hs_kto.full_name, hs_customer.company_name, hs_kto.avg_communicatie, hs_kto.avg_impact, hs_kto.avg_aanbevelen]
@@ -78,7 +72,7 @@ view: hs_kto {
   measure: avg_communicatie {
     type: average
     sql: ${TABLE}.score_communicatie ;;
-    label: "Gem. Communicatie & samenwerking"
+    label: "Avg. Communicatie & samenwerking"
     value_format: "0.00"
     group_label: "NPS Scores"
   }
@@ -86,7 +80,7 @@ view: hs_kto {
   measure: avg_impact {
     type: average
     sql: ${TABLE}.score_impact ;;
-    label: "Gem. Impact online doelstellingen"
+    label: "Avg. Impact online doelstellingen"
     value_format: "0.00"
     group_label: "NPS Scores"
   }
@@ -94,8 +88,17 @@ view: hs_kto {
   measure: avg_aanbevelen {
     type: average
     sql: ${TABLE}.score_aanbevelen ;;
-    label: "Gem. Aanbevelen (NPS vraag)"
+    label: "Avg. Aanbevelen"
     value_format: "0.00"
     group_label: "NPS Scores"
+  }
+
+  measure: avg_account {
+    type: average
+    sql: ${TABLE}.score_account_pm ;;
+    label: "Avg. Account score"
+    value_format: "0.00"
+    group_label: "Department Scores"
+    drill_fields: [hs_kto.full_name, hs_customer.company_name, hs_kto.avg_account]
   }
 }
