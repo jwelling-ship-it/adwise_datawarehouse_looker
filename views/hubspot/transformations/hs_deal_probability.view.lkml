@@ -3,7 +3,9 @@ view: hs_deal_probability {
 
   dimension: deal_id {
     primary_key: yes
+    type: number
     sql: ${TABLE}.deal_id ;;
+    value_format_name: id
   }
 
   measure: probability  {

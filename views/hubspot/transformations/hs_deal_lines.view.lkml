@@ -3,7 +3,9 @@ sql_table_name: `adwise-fivetran.fvt_hubspot_datawarehouse.deal_lines` ;;
 
 dimension: deal_id {
   hidden: yes
+  type: number
   sql: ${TABLE}.dealid ;;
+  value_format_name: id
 }
 
 dimension: lineitem_id {

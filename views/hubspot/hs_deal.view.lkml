@@ -4,7 +4,9 @@ view: hs_deal {
   dimension: deal_id {
     hidden: yes
     primary_key: yes
+    type: number
     sql: ${TABLE}.dealid ;;
+    value_format_name: id
   }
 
   dimension: owner_id {

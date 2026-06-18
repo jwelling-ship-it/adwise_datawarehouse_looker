@@ -21,6 +21,12 @@ view: bing_ads_spend {
     value_format_name: id
   }
 
+  dimension: account_name {
+    type: string
+    sql: ${TABLE}.account_name ;;
+    label: "Account"
+  }
+
   dimension: currency_code {
     type: string
     sql: ${TABLE}.currency_code ;;
@@ -54,7 +60,7 @@ view: bing_ads_spend {
       END ;;
     label: "Payout %"
     description: "4% bij <700K, 5% bij ≥700K, 6% bij ≥900K (per kwartaal)"
-    value_format: "0.0\"%\""
+    value_format_name: percent_0
   }
 
   measure: payout_amount {
