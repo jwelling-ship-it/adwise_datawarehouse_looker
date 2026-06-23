@@ -70,6 +70,7 @@ measure: weighted_amount {
   type: sum
   sql: ${TABLE}.weighted_amount ;;
   value_format_name: eur
+  drill_fields: [ns_employee.name, hs_customer.company_name, hs_deal.deal_name, hs_item.item_name, weighted_amount]
 }
 
 measure: weighted_contract_value {
@@ -78,5 +79,6 @@ measure: weighted_contract_value {
   type: sum
   sql: ${TABLE}.weighted_contract_value ;;
   value_format_name: eur
+  drill_fields: [ns_employee.name, hs_customer.company_name, hs_deal.deal_name, hs_item.item_name, weighted_contract_value]
 }
  }
