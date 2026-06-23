@@ -54,6 +54,15 @@ view: hs_deal {
     sql: ${TABLE}.isclosedwon ;;
   }
 
+  dimension: is_pipeline {
+    label: "Is pipeline"
+    description: "Deal is open and close date is in the current or a future month"
+    type: yesno
+    sql: ${is_closed} = false
+      AND DATE_TRUNC(${close_date_date}, MONTH) >= DATE_TRUNC(CURRENT_DATE(), MONTH) ;;
+  }
+
+
   dimension: probability {
     description: "The probability of winning the deal in its current stage"
     type: number
