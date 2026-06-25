@@ -101,4 +101,16 @@ view: hs_kto {
     group_label: "Department Scores"
     drill_fields: [hs_kto.full_name, hs_customer.company_name, hs_kto.avg_account]
   }
+
+  measure: nps_score {
+    type: number
+    sql: SAFE_DIVIDE(
+           COUNTIF(${TABLE}.score_aanbevelen >= 9) - COUNTIF(${TABLE}.score_aanbevelen <= 6),
+           COUNTIF(${TABLE}.score_aanbevelen IS NOT NULL)
+         ) * 100 ;;
+    label: "NPS score"
+    description: "Net Promoter Score: % promoters (9-10) − % detractors (0-6). Bereik: -100 tot +100."
+    value_format: "0"
+    group_label: "NPS Scores"
+  }
 }
