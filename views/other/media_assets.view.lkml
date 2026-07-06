@@ -73,6 +73,7 @@ view: media_assets {
   }
 
   dimension: department_name {
+    hidden: yes
     label: "Department"
     type: string
     sql: ${TABLE}.department_name ;;
