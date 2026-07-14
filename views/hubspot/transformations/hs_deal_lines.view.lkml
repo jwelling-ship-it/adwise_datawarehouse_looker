@@ -64,6 +64,30 @@ measure: amount {
   value_format_name: eur
 }
 
+measure: contract_value {
+  label: "Contract value"
+  description: "The sum of the total contract value of the items."
+  type: sum
+  sql: ${TABLE}.contractvalue ;;
+  value_format_name: eur
+}
+
+measure: predicted_amount {
+  label: "Predicted amount"
+  description: "The predicted weighted sum of the line item amounts based on the ML model's probability"
+  type: sum
+  sql: ${TABLE}.predicted_amount ;;
+  value_format_name: eur
+}
+
+measure: precited_contract_value {
+  label: "Predicted contract value"
+  description: "The precited weighted sum of the total contract value of the items based on the ML model's probability"
+  type: sum
+  sql: ${TABLE}.predicted_contract_value ;;
+  value_format_name: eur
+}
+
 measure: weighted_amount {
   label: "Weighted amount"
   description: "The weighted sum of the line item amounts based on deal probability"

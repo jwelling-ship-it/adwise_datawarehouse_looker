@@ -70,6 +70,14 @@ view: hs_deal {
     value_format_name: percent_0
   }
 
+  dimension: predicted_probability {
+    label: "Predicted probability"
+    description: "The ML model's predicted probability of winning this deal in its current close month"
+    type: number
+    sql: ${TABLE}.ml_probability ;;
+    value_format_name: percent_0
+  }
+
 
 
    }
