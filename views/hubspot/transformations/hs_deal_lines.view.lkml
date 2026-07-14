@@ -78,14 +78,16 @@ measure: predicted_amount {
   type: sum
   sql: ${TABLE}.predicted_amount ;;
   value_format_name: eur
+  drill_fields: [hs_deal.deal_name, hs_deal.probability, hs_deal.predicted_probability, predicted_amount]
 }
 
-measure: precited_contract_value {
+measure: predicted_contract_value {
   label: "Predicted contract value"
   description: "The precited weighted sum of the total contract value of the items based on the ML model's probability"
   type: sum
   sql: ${TABLE}.predicted_contract_value ;;
   value_format_name: eur
+  drill_fields: [hs_deal.deal_name, hs_deal.probability, hs_deal.predicted_probability, predicted_contract_value]
 }
 
 measure: weighted_amount {
