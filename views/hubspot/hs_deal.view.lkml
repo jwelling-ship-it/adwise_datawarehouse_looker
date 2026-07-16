@@ -29,15 +29,23 @@ view: hs_deal {
     label: "Close"
     description: "The expected close date for the deal"
     type: time
-    timeframes: [date, month, quarter, year]
+    timeframes: [date, month, week, quarter, year]
     sql: ${TABLE}.closedate ;;
+  }
+
+  dimension_group: create_date {
+    label: "Create"
+    description: "The date of creation of the deal"
+    type: time
+    timeframes: [date, month, week, quarter, year]
+    sql: ${TABLE}.createddate ;;
   }
 
   dimension: stage {
     label: "Deal stage"
     description: "The current stage of the deal"
     type: string
-    sql: ${TABLE}.stage ;;
+    sql: ${TABLE}.dealstage ;;
   }
 
   dimension: financecheck {
@@ -95,7 +103,7 @@ view: hs_deal {
   dimension_group: quote_date {
     label: "Quote sent"
     type: time
-    timeframes: [date, month, quarter, year]
+    timeframes: [date, month, week, quarter, year]
     sql: ${TABLE}.quote_sent_date ;;
   }
 
@@ -104,6 +112,7 @@ view: hs_deal {
     label: "# Deals"
     type: count_distinct
     sql: ${deal_id} ;;
+    drill_fields: [deal_name, create_date_date, close_date_date, stage]
   }
 
 
