@@ -40,6 +40,12 @@ view: hs_deal {
     sql: ${TABLE}.stage ;;
   }
 
+  dimension: financecheck {
+    type: yesno
+    hidden: yes
+    sql: ${TABLE}.financecheck ;;
+  }
+
   dimension: is_closed {
     label: "Is closed"
     description: "Check whether deal has been closed or not"
@@ -56,10 +62,11 @@ view: hs_deal {
 
   dimension: is_pipeline {
     label: "Is pipeline"
-    description: "Deal is open and close date is in the current or a future month"
+    description: "Deal is open and close date is in the current or a future month, or deal is closed but not yet finance-checked"
     type: yesno
-    sql: ${is_closed} = false
-      AND DATE_TRUNC(${close_date_date}, MONTH) >= DATE_TRUNC(CURRENT_DATE(), MONTH) ;;
+    sql: (${is_closed} = false
+      AND DATE_TRUNC(${close_date_date}, MONTH) >= DATE_TRUNC(CURRENT_DATE(), MONTH))
+      OR (${is_closed} = true AND ${financecheck} = false) ;;
   }
 
 
@@ -76,6 +83,27 @@ view: hs_deal {
     type: number
     sql: ${TABLE}.ml_probability ;;
     value_format_name: percent_0
+  }
+
+  dimension: quote_sent {
+    label: "Quote sent"
+    description: "Check whether or not a quote has been sent to the customer for this deal"
+    type: yesno
+    sql: ${TABLE}.has_quote_sent ;;
+  }
+
+  dimension_group: quote_date {
+    label: "Quote sent"
+    type: time
+    timeframes: [date, month, quarter, year]
+    sql: ${TABLE}.quote_sent_date ;;
+  }
+
+
+  measure: count {
+    label: "# Deals"
+    type: count_distinct
+    sql: ${deal_id} ;;
   }
 
 
