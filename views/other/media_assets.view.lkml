@@ -110,7 +110,8 @@ view: media_assets {
   }
 
   measure: count {
-    type: count
+    type: count_distinct
+    sql: ${id} ;;
     drill_fields: [name, department_name, customer_name, reporter_name, production_month]
   }
 }
