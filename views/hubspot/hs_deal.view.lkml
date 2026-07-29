@@ -74,7 +74,7 @@ view: hs_deal {
     type: yesno
     sql: (${is_closed} = false
       AND DATE_TRUNC(${close_date_date}, MONTH) >= DATE_TRUNC(CURRENT_DATE(), MONTH))
-      OR (${is_closed} = true AND ${financecheck} = false) ;;
+      OR (${is_closed_won} = true AND ${financecheck} = false) ;;
   }
 
 
