@@ -13,6 +13,10 @@ view: hs_contact {
 
   dimension: name {
     sql: ${TABLE}.name ;;
+    link: {
+      label: "Open in HubSpot"
+      url: "https://app.hubspot.com/contacts/139703519/record/0-1/{{ id }}"
+    }
   }
 
   dimension: stage {
@@ -25,6 +29,10 @@ view: hs_contact {
 
   dimension: company {
     sql: ${TABLE}.companyname ;;
+  }
+
+  measure: leadscore {
+    sql: ${TABLE}.leadscore ;;
   }
 
 }

@@ -32,8 +32,16 @@ explore: hs_contact_lifecycle {
   label: "Contact Funnel"
 
   join: hs_contact {
+    view_label: "Contact"
     type: left_outer
     relationship: many_to_one
     sql_on: ${hs_contact_lifecycle.contact_id} = ${hs_contact.id} ;;
+  }
+
+  join: hs_contact_conversions {
+    view_label: "Conversions"
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${hs_contact_lifecycle.contact_id} = ${hs_contact_conversions.contact_id} ;;
   }
 }
