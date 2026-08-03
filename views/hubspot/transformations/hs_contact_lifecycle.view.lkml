@@ -141,7 +141,7 @@ view: hs_contact_lifecycle {
   measure: count {
     type: count_distinct
     sql: ${contact_id} ;;
-    drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.source]
+    drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.company, hs_contact.source]
   }
 
   measure: lead_count {

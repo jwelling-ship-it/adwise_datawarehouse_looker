@@ -149,7 +149,7 @@ view: hs_contact_conversions {
     type: count_distinct
     label: "# Contacts"
     sql: ${contact_id} ;;
-    drill_fields: [contact_id, email]
+    drill_fields: [contact_id, hs_contact.name, email]
   }
 
   measure: lead_count {
@@ -198,7 +198,7 @@ view: hs_contact_conversions {
     label: "# Lead → MQL Converted"
     sql: ${contact_id} ;;
     filters: [converted_lead_to_mql: "yes"]
-    drill_fields: [contact_id, email, lead_first_date, mql_first_date]
+    drill_fields: [contact_id, hs_contact.name, email, hs_contact.company, lead_first_date, mql_first_date]
   }
 
   measure: mql_to_sql_converted_count {
@@ -206,7 +206,7 @@ view: hs_contact_conversions {
     label: "# MQL → SQL Converted"
     sql: ${contact_id} ;;
     filters: [converted_mql_to_sql: "yes"]
-    drill_fields: [contact_id, email, mql_first_date, sql_first_date]
+    drill_fields: [contact_id, hs_contact.name, email, hs_contact.company, mql_first_date, sql_first_date]
   }
 
   measure: sql_to_opportunity_converted_count {
@@ -214,7 +214,7 @@ view: hs_contact_conversions {
     label: "# SQL → Opportunity Converted"
     sql: ${contact_id} ;;
     filters: [converted_sql_to_opportunity: "yes"]
-    drill_fields: [contact_id, email, sql_first_date, opportunity_first_date]
+    drill_fields: [contact_id, hs_contact.name, email, hs_contact.company, sql_first_date, opportunity_first_date]
   }
 
   # -----------------------------------------------------------------------
