@@ -64,6 +64,22 @@ measure: amount {
   value_format_name: eur
 }
 
+measure: initial_contract_value {
+  label: "Initial contract value"
+  description: "The sum of the total contract value of non-recurring items"
+  type: sum
+  sql: ${TABLE}.contractvalue ;;
+  filters: [is_recurring: "no"]
+}
+
+  measure: recurring_contract_value {
+    label: "Recurring contract value"
+    description: "The sum of the total contract value of recurring items"
+    type: sum
+    sql: ${TABLE}.contractvalue ;;
+    filters: [is_recurring: "yes"]
+  }
+
 measure: contract_value {
   label: "Contract value"
   description: "The sum of the total contract value of the items."
