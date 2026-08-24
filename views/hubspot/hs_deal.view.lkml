@@ -112,7 +112,7 @@ view: hs_deal {
     label: "# Deals"
     type: count_distinct
     sql: ${deal_id} ;;
-    drill_fields: [deal_name, create_date_date, close_date_date, stage]
+    drill_fields: [deal_name, ns_employee.name, create_date_date, close_date_date, stage]
   }
 
 
