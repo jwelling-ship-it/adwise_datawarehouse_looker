@@ -26,6 +26,7 @@ view: hs_deal {
   }
 
   dimension_group: close_date {
+    group_label: "Dates"
     label: "Close"
     description: "The expected close date for the deal"
     type: time
@@ -34,6 +35,7 @@ view: hs_deal {
   }
 
   dimension_group: create_date {
+    group_label: "Dates"
     label: "Create"
     description: "The date of creation of the deal"
     type: time
@@ -55,6 +57,7 @@ view: hs_deal {
   }
 
   dimension: is_closed {
+    group_label: "Status"
     label: "Is closed"
     description: "Check whether deal has been closed or not"
     type: yesno
@@ -62,6 +65,7 @@ view: hs_deal {
   }
 
   dimension: is_closed_won {
+    group_label: "Status"
     label: "Is won"
     description: "Check whether deal has been won or not"
     type: yesno
@@ -69,6 +73,7 @@ view: hs_deal {
   }
 
   dimension: is_pipeline {
+    group_label: "Status"
     label: "Is pipeline"
     description: "Deal is open and close date is in the current or a future month, or deal is closed but not yet finance-checked"
     type: yesno
@@ -79,6 +84,7 @@ view: hs_deal {
 
 
   dimension: probability {
+    group_label: "Probabilities"
     description: "The probability of winning the deal in its current stage"
     type: number
     sql: ${TABLE}.probability ;;
@@ -86,6 +92,7 @@ view: hs_deal {
   }
 
   dimension: predicted_probability {
+    group_label: "Probabilities"
     label: "Predicted probability"
     description: "The ML model's predicted probability of winning this deal in its current close month"
     type: number
@@ -94,6 +101,7 @@ view: hs_deal {
   }
 
   dimension: quote_sent {
+    group_label: "Status"
     label: "Quote sent"
     description: "Check whether or not a quote has been sent to the customer for this deal"
     type: yesno
@@ -101,6 +109,7 @@ view: hs_deal {
   }
 
   dimension_group: quote_date {
+    group_label: "Dates"
     label: "Quote sent"
     type: time
     timeframes: [date, month, week, quarter, year]
@@ -109,10 +118,36 @@ view: hs_deal {
 
 
   measure: count {
+    group_label: "Counts"
     label: "# Deals"
     type: count_distinct
     sql: ${deal_id} ;;
     drill_fields: [deal_name, ns_employee.name, create_date_date, close_date_date, stage]
+  }
+
+  measure: count_won {
+    group_label: "Counts"
+    label: "# Deals Won"
+    type: count_distinct
+    sql: ${deal_id} ;;
+    filters: [is_closed_won: "Yes"]
+    drill_fields: [deal_name, ns_employee.name, create_date_date, close_date_date, stage]
+  }
+
+  measure: count_open {
+    group_label: "Counts"
+    label: "# Deals Open"
+    type: count_distinct
+    sql: ${deal_id} ;;
+    filters: [is_pipeline: "Yes"]
+    drill_fields: [deal_name, ns_employee.name, create_date_date, close_date_date, stage]
+  }
+
+  measure: win_rate {
+    label: "Win %"
+    type: number
+    sql: SAFE_DIVIDE(${count_won}, ${count}) ;;
+    value_format_name: percent_0
   }
 
 
