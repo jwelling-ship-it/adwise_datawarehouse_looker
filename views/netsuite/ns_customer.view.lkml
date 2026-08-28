@@ -3,6 +3,7 @@ view: ns_customer {
 
   dimension: id {
     label: "Customer ID"
+    description: "The NetSuite customer record ID"
     type: number
     primary_key: yes
     sql: ${TABLE}.id ;;
@@ -21,16 +22,19 @@ view: ns_customer {
 
   dimension: customer_name {
     label: "Customer"
+    description: "The name of the customer"
     sql: ${TABLE}.companyname ;;
   }
 
   dimension: industry {
     label: "Industry"
+    description: "The industry the customer operates in"
     sql: ${TABLE}.industry ;;
   }
 
   measure: count {
     type: count_distinct
+    description: "Count of distinct customers"
     sql: ${id} ;;
   }
 

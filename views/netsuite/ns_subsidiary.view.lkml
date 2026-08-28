@@ -9,6 +9,7 @@ view: ns_subsidiary {
 
   dimension: subsidiary {
     type: string
+    description: "The name of the NetSuite subsidiary"
     sql: ${TABLE}.name ;;
   }
 

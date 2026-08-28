@@ -19,12 +19,14 @@ view: hs_item {
 
   dimension: item_name {
     label: "Item"
+    description: "The name of the HubSpot line item"
     type: string
     sql: ${TABLE}.name ;;
   }
 
   dimension: item_type {
     label: "Item type"
+    description: "The HubSpot product type of the line item"
     type: string
     sql: ${TABLE}.producttype ;;
   }

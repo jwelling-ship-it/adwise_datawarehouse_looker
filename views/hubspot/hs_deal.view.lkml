@@ -111,6 +111,7 @@ view: hs_deal {
   dimension_group: quote_date {
     group_label: "Dates"
     label: "Quote sent"
+    description: "The date a quote was sent to the customer for this deal"
     type: time
     timeframes: [date, month, week, quarter, year]
     sql: ${TABLE}.quote_sent_date ;;
@@ -120,6 +121,7 @@ view: hs_deal {
   measure: count {
     group_label: "Counts"
     label: "# Deals"
+    description: "Count of distinct deals"
     type: count_distinct
     sql: ${deal_id} ;;
     drill_fields: [deal_name, ns_employee.name, create_date_date, close_date_date, stage]
@@ -128,6 +130,7 @@ view: hs_deal {
   measure: count_won {
     group_label: "Counts"
     label: "# Deals Won"
+    description: "Count of distinct deals that have been closed won"
     type: count_distinct
     sql: ${deal_id} ;;
     filters: [is_closed_won: "Yes"]
@@ -137,6 +140,7 @@ view: hs_deal {
   measure: count_open {
     group_label: "Counts"
     label: "# Deals Open"
+    description: "Count of distinct deals currently in the pipeline"
     type: count_distinct
     sql: ${deal_id} ;;
     filters: [is_pipeline: "Yes"]
@@ -145,6 +149,7 @@ view: hs_deal {
 
   measure: win_rate {
     label: "Win %"
+    description: "Share of deals (# Deals Won divided by # Deals) that were closed won"
     type: number
     sql: SAFE_DIVIDE(${count_won}, ${count}) ;;
     value_format_name: percent_0

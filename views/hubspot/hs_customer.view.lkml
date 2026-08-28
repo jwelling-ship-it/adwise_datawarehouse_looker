@@ -3,6 +3,7 @@ view: hs_customer {
 
   dimension: id {
     label: "Customer ID (HubSpot)"
+    description: "The HubSpot company record ID"
     primary_key: yes
     sql: ${TABLE}.id ;;
   }
@@ -14,6 +15,7 @@ view: hs_customer {
 
   dimension: netsuite_id {
     label: "NetSuite ID"
+    description: "The matching NetSuite customer ID for this HubSpot company, used to join to NetSuite data"
     type: number
     sql: ${TABLE}.netsuite_customer_id ;;
     value_format_name: id
@@ -21,6 +23,7 @@ view: hs_customer {
 
   dimension: company_name {
     label: "Company"
+    description: "The name of the company"
     type: string
     sql: ${TABLE}.name ;;
   }
@@ -48,6 +51,7 @@ view: hs_customer {
 
   measure: count {
     type: count_distinct
+    description: "Count of distinct companies"
     sql: ${TABLE}.id ;;
   }
 

@@ -27,11 +27,13 @@ view: ns_project_efficiency {
 
   dimension: project_name {
     label: "Project"
+    description: "The name of the project"
     type: string
     sql: ${TABLE}.project_name ;;
   }
 
   dimension: is_complete {
+    description: "Whether the project has finished"
     type: yesno
     sql: ${TABLE}.data_complete_flag ;;
   }

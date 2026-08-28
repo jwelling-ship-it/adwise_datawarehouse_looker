@@ -4,6 +4,7 @@ view: hs_deal_probability {
   dimension: deal_id {
     primary_key: yes
     type: number
+    description: "The HubSpot deal ID this win-probability score belongs to"
     sql: ${TABLE}.deal_id ;;
     value_format_name: id
   }
@@ -23,6 +24,7 @@ view: hs_deal_probability {
 
   measure: weighted_amount {
     label: "Weighted amount"
+    description: "Deal amount weighted by the ML model's win probability"
     type: sum
     sql: ${TABLE}.weighted_amount ;;
     value_format_name: eur

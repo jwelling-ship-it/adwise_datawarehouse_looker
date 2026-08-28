@@ -19,12 +19,14 @@ view: ns_department {
 
   dimension: department_name {
     label: "Department"
+    description: "The top-level (parent) department name"
     type: string
     sql:  REPLACE(${TABLE}.parent_name, '&', 'and') ;;
   }
 
   dimension: sub_department_name {
     label: "Sub-department"
+    description: "The specific sub-department name"
     type: string
     sql: ${TABLE}.name ;;
   }

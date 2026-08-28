@@ -39,6 +39,7 @@ view: hs_contact_lifecycle {
   }
 
   dimension: contact_id {
+    description: "The HubSpot contact ID"
     sql: ${TABLE}.contact_id ;;
     link: {
       label: "Open in HubSpot"
@@ -49,19 +50,20 @@ view: hs_contact_lifecycle {
   dimension_group: row {
     type: time
     timeframes: [month, quarter, year]
-    description: "Exacte timestamp van de stage-wijziging (was: maand-afgeronde carry-forward datum). Voor instroom-analyse per periode — elke rij is per definitie nieuwe instroom, een is_change-filter is niet meer nodig."
+    description: "Exact timestamp of the stage change (previously: month-rounded carry-forward date). For inflow analysis per period — every row is by definition new inflow, an is_change filter is no longer needed."
     sql: ${TABLE}.stage_change_timestamp ;;
   }
 
   dimension: stage {
     order_by_field: stage_sort_order
+    description: "The funnel stage this contact moved into at this stage-change event"
     sql: ${TABLE}.funnel_stage ;;
   }
 
   dimension: stage_sort_order {
     hidden: yes
     type: number
-    description: "Logische funnel-volgorde voor sortering van 'stage' in tabellen/pivots (i.p.v. alfabetisch). Aanname over volgorde: Subscriber < Other < Hitlist < Lead < MQL < SQL < Opportunity < Customer < Partner, met de 'verloren/inactief'-stages aan het eind. Pas de nummering hieronder aan als dit niet de gewenste volgorde is."
+    description: "Logical funnel order for sorting 'stage' in tables/pivots (instead of alphabetical). Assumption about order: Subscriber < Other < Hitlist < Lead < MQL < SQL < Opportunity < Customer < Partner, with the 'lost/inactive' stages at the end. Adjust the numbering below if this is not the desired order."
     sql: CASE ${TABLE}.funnel_stage
       WHEN 'Subscriber'        THEN 1
       WHEN 'Other'             THEN 2
@@ -83,14 +85,14 @@ view: hs_contact_lifecycle {
   dimension: previous_stage {
     order_by_field: previous_stage_sort_order
     label: "Previous Stage"
-    description: "De stage die dit contact hiervóór had, vóór deze wijziging. Filter hierop (niet op 'Stage') om de duur van een AFGEROND verblijf te bekijken — bv. previous_stage = 'Lead' voor de gemiddelde tijd die contacten in Lead doorbrachten voordat ze naar de volgende stage gingen. NULL als dit de eerste bekende stage-wijziging van dit contact is."
+    description: "The stage this contact was in immediately before this change. Filter on this (not on 'Stage') to look at the duration of a COMPLETED stay — e.g. previous_stage = 'Lead' for the average time contacts spent in Lead before moving to the next stage. NULL if this is the first known stage change for this contact."
     sql: ${TABLE}.previous_funnel_stage ;;
   }
 
   dimension: previous_stage_sort_order {
     hidden: yes
     type: number
-    description: "Losse sorteervolgorde voor previous_stage, gebaseerd op previous_funnel_stage. Hergebruikte eerder per ongeluk stage_sort_order (gebaseerd op funnel_stage, de bestemmings-stage) — dat veroorzaakte een ongewenste extra GROUP BY op de bestemmings-stage, ook als die niet als kolom werd getoond. Zie Log/2026-07-30 - Contact Funnel Conversie %.md (2026-08-03)."
+    description: "Separate sort order for previous_stage, based on previous_funnel_stage. Previously accidentally reused stage_sort_order (based on funnel_stage, the destination stage) — that caused an unwanted extra GROUP BY on the destination stage, even when it wasn't shown as a column. See Log/2026-07-30 - Contact Funnel Conversie %.md (2026-08-03)."
     sql: CASE ${TABLE}.previous_funnel_stage
       WHEN 'Subscriber'        THEN 1
       WHEN 'Other'             THEN 2
@@ -112,7 +114,7 @@ view: hs_contact_lifecycle {
   dimension: days_in_previous_stage {
     type: number
     label: "Days in Previous Stage"
-    description: "Afgeronde duur (in dagen) van het verblijf in Previous Stage, vóór deze wijziging. Dekt alleen afgeronde verblijven."
+    description: "Completed duration (in days) of the stay in Previous Stage, before this change. Covers only completed stays."
     sql: ${TABLE}.days_previous_stage ;;
   }
 
@@ -120,21 +122,21 @@ view: hs_contact_lifecycle {
     type: time
     timeframes: [date, month, quarter, year]
     label: "Previous Stage Start"
-    description: "Exacte timestamp waarop dit contact aan de Previous Stage begon — het COHORT-moment. Filter hierop (i.p.v. op Row Month/Quarter/Year) voor 'gemiddelde tijd in Lead voor contacten die dit jaar Lead werden'. Filteren op Row i.p.v. Previous Stage Start mengt oude en nieuwe verblijven en geeft een ander (hoger) gemiddelde — zie Log/2026-07-30 - Contact Funnel Conversie %.md (2026-08-03), voorbeeld: 96,5 vs 6,0 dagen voor Lead in 2026."
+    description: "Exact timestamp when this contact started Previous Stage — the COHORT moment. Filter on this (instead of on Row Month/Quarter/Year) for 'average time in Lead for contacts that became Lead this year'. Filtering on Row instead of Previous Stage Start mixes old and new stays and gives a different (higher) average — see Log/2026-07-30 - Contact Funnel Conversie %.md (2026-08-03), example: 96.5 vs 6.0 days for Lead in 2026."
     sql: ${TABLE}.previous_stage_start_timestamp ;;
   }
 
   measure: completed_segment_count {
     type: count
     label: "# Completed Stage Visits"
-    description: "Aantal afgeronde stage-verblijven binnen de huidige filterselectie (filter op Previous Stage voor een specifieke stage). Gebruik als steekproefgrootte-context naast Avg Days in Stage (Completed Only)."
+    description: "Number of completed stage stays within the current filter selection (filter on Previous Stage for a specific stage). Use as sample-size context alongside Avg Days in Stage (Completed Only)."
     filters: [previous_stage: "-NULL"]
   }
 
   measure: average_completed_duration_days {
     type: average
     label: "Avg Days in Stage (Completed Only)"
-    description: "Gemiddeld aantal dagen in een stage, alleen over afgeronde verblijven. Filter op Previous Stage (bv. 'Lead') voor de duur van die specifieke stage — niet op 'Stage', want dat is nu de NIEUWE stage na de wijziging, niet de afgeronde. Overweeg ook te filteren op Previous Stage Start (via hs_contact_stage_events) voor een cohort-gebaseerd gemiddelde in plaats van een door oude en nieuwe verblijven gemengd cijfer."
+    description: "Average number of days in a stage, over completed stays only. Filter on Previous Stage (e.g. 'Lead') for the duration of that specific stage — not on 'Stage', since that is now the NEW stage after the change, not the completed one. Also consider filtering on Previous Stage Start (via hs_contact_stage_events) for a cohort-based average instead of a figure mixed from old and new stays."
     sql: ${days_in_previous_stage} ;;
     filters: [previous_stage: "-NULL"]
     value_format_name: decimal_1
@@ -142,6 +144,7 @@ view: hs_contact_lifecycle {
 
   measure: count {
     type: count_distinct
+    description: "Count of distinct contacts with a stage-change event in the current filter selection"
     sql: ${contact_id} ;;
     drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.company, hs_contact.source]
   }
@@ -149,7 +152,7 @@ view: hs_contact_lifecycle {
   measure: lead_count {
     type: count_distinct
     label: "# Leads"
-    description: "Contacten die in de gefilterde periode een stage-wijziging naar Lead hadden. Telt ook mee als hetzelfde contact in diezelfde periode ook al verder doorstroomde (bv. dezelfde dag nog MQL werd) — dat is precies waar de oude contact_funnel_stages-versie instroom miste."
+    description: "Contacts that had a stage change to Lead in the filtered period. Also counts if the same contact progressed further within that same period (e.g. became MQL that same day) — this is exactly the inflow that the old contact_funnel_stages version missed."
     sql: ${contact_id} ;;
     filters: [stage: "Lead"]
     drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.company]
@@ -158,6 +161,7 @@ view: hs_contact_lifecycle {
   measure: mql_count {
     type: count_distinct
     label: "# MQL"
+    description: "Contacts that had a stage-change event into MQL in the filtered period"
     sql: ${contact_id};;
     filters: [stage: "MQL"]
     drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.company]
@@ -166,6 +170,7 @@ view: hs_contact_lifecycle {
   measure: sql_count {
     type: count_distinct
     label: "# SQL"
+    description: "Contacts that had a stage-change event into SQL in the filtered period"
     sql: ${contact_id};;
     filters: [stage: "SQL"]
     drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.company]
@@ -174,6 +179,7 @@ view: hs_contact_lifecycle {
   measure: opportunity_count {
     type: count_distinct
     label: "# Opportunity"
+    description: "Contacts that had a stage-change event into Opportunity in the filtered period"
     sql: ${contact_id};;
     filters: [stage: "Opportunity"]
     drill_fields: [contact_id, hs_contact.name, hs_contact.email, hs_contact.company]

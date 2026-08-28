@@ -79,6 +79,7 @@ view: ns_project_financials {
 
   measure: count {
     label: "# Customers"
+    description: "Count of distinct customers with project financials in the current selection"
     type: count_distinct
     sql: ${customer_id} ;;
     drill_fields: [ns_customer.customer_name, ns_project_financials.net_revenue]

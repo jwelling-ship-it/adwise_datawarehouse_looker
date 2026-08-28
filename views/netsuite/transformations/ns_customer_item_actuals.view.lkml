@@ -5,6 +5,7 @@ view: ns_customer_item_actuals {
     type: time
     datatype: date
     timeframes: [date, month, quarter, year]
+    description: "The month of the actuals entry"
     sql: ${TABLE}.row_date ;;
   }
 
@@ -30,6 +31,7 @@ view: ns_customer_item_actuals {
 
   measure: revenue {
     label: "Revenue"
+    description: "Total actual revenue from NetSuite transactions"
     type: sum
     sql: ${TABLE}.revenue ;;
     value_format_name: eur
@@ -37,6 +39,7 @@ view: ns_customer_item_actuals {
 
   measure: cogs {
     label: "COGS"
+    description: "Total actual cost of goods sold from NetSuite transactions"
     type: sum
     sql: ${TABLE}.cogs ;;
     value_format_name: eur
@@ -44,6 +47,7 @@ view: ns_customer_item_actuals {
 
   measure: gross_margin {
     label: "Gross margin"
+    description: "Actual revenue minus COGS"
     type: sum
     sql: ${TABLE}.gross_margin ;;
     value_format_name: eur
@@ -51,6 +55,7 @@ view: ns_customer_item_actuals {
 
   measure: labor_gross_margin {
     label: "Labor gross margin"
+    description: "Actual labor revenue minus labor COGS"
     type: sum
     sql: ${TABLE}.labor_gm ;;
     value_format_name: eur
@@ -58,6 +63,7 @@ view: ns_customer_item_actuals {
 
   measure: labor_cogs {
     label: "Labor COGS"
+    description: "Total actual labor cost of goods sold"
     type: sum
     sql: ${TABLE}.labor_cogs ;;
     value_format_name: eur
@@ -65,6 +71,7 @@ view: ns_customer_item_actuals {
 
   measure: labor_revenue {
     label: "Labor revenue"
+    description: "Total actual labor revenue"
     type: sum
     sql: ${TABLE}.labor_revenue;;
     value_format_name: eur

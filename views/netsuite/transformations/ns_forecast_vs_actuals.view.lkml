@@ -9,6 +9,7 @@ view: ns_forecast_vs_actuals {
     type: time
     timeframes: [date, month, quarter, year]
     datatype: date
+    description: "The month of the forecast/actuals entry"
     sql: ${TABLE}.row_date ;;
     label: "Row"
   }
@@ -35,7 +36,7 @@ view: ns_forecast_vs_actuals {
     type: sum
     sql: ${TABLE}.rev_a ;;
     label: "Forecast Revenue"
-    description: "Gealloceerde omzet uit employee forecast (milestones + contracts)"
+    description: "Allocated revenue from employee forecast (milestones + contracts)"
     value_format_name: eur
   }
 
@@ -43,7 +44,7 @@ view: ns_forecast_vs_actuals {
     type: sum
     sql: ${TABLE}.nrev_a ;;
     label: "Forecast GM"
-    description: "Gealloceerde bruto marge uit employee forecast (milestones + contracts - costs)"
+    description: "Allocated gross margin from employee forecast (milestones + contracts - costs)"
     value_format_name: eur
   }
 
@@ -51,7 +52,7 @@ view: ns_forecast_vs_actuals {
     type: sum
     sql: ${TABLE}.hours_ra ;;
     label: "Hours (RA)"
-    description: "Gealloceerde uren"
+    description: "Allocated hours"
     value_format_name: decimal_1
   }
 
@@ -63,6 +64,7 @@ view: ns_forecast_vs_actuals {
     type: sum
     sql: ${TABLE}.labor_revenue ;;
     label: "Actuals Labor Revenue"
+    description: "Actual labor revenue realized"
     value_format_name: eur
   }
 
@@ -70,6 +72,7 @@ view: ns_forecast_vs_actuals {
     type: sum
     sql: ${TABLE}.labor_cogs ;;
     label: "Actuals Labor COGS"
+    description: "Actual labor cost of goods sold"
     value_format_name: eur
   }
 
@@ -77,6 +80,7 @@ view: ns_forecast_vs_actuals {
     type: sum
     sql: ${TABLE}.labor_gm ;;
     label: "Actuals Labor GM"
+    description: "Actual labor gross margin (labor revenue minus labor COGS)"
     value_format_name: eur
   }
 
@@ -84,7 +88,7 @@ view: ns_forecast_vs_actuals {
     type: sum
     sql: ${TABLE}.total_revenue ;;
     label: "Actuals Revenue (totaal)"
-    description: "Totale omzet incl. non-labor"
+    description: "Total revenue incl. non-labor"
     value_format_name: eur
   }
 
@@ -92,7 +96,7 @@ view: ns_forecast_vs_actuals {
     type: sum
     sql: ${TABLE}.total_gm ;;
     label: "Actuals GM (totaal)"
-    description: "Totale bruto marge incl. non-labor"
+    description: "Total gross margin incl. non-labor"
     value_format_name: eur
   }
 
@@ -103,7 +107,7 @@ view: ns_forecast_vs_actuals {
   measure: verschil_rev {
     type: sum
     sql: ${TABLE}.verschil_rev ;;
-    label: "Verschil Revenue"
+    label: "Revenue Difference"
     description: "Forecast Rev - Actuals Labor Revenue"
     value_format_name: eur
   }
@@ -111,7 +115,7 @@ view: ns_forecast_vs_actuals {
   measure: verschil_gm {
     type: sum
     sql: ${TABLE}.verschil_gm ;;
-    label: "Verschil GM"
+    label: "GM Difference"
     description: "Forecast GM - Actuals Labor GM"
     value_format_name: eur
   }

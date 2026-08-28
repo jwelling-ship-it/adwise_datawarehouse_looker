@@ -9,6 +9,7 @@ view: bing_ads_spend {
     type: time
     timeframes: [date, month, quarter, year]
     datatype: date
+    description: "The month of the spend entry"
     sql: ${TABLE}.row_date ;;
     label: "Row"
   }
@@ -23,6 +24,7 @@ view: bing_ads_spend {
 
   dimension: account_name {
     type: string
+    description: "The name of the Bing Ads account"
     sql: ${TABLE}.account_name ;;
     label: "Account"
   }
@@ -42,6 +44,7 @@ view: bing_ads_spend {
     type: sum
     sql: ${TABLE}.spend ;;
     label: "Spend"
+    description: "Total Bing Ads spend"
     value_format_name: eur
   }
 
@@ -59,7 +62,7 @@ view: bing_ads_spend {
         ELSE 0.04
       END ;;
     label: "Payout %"
-    description: "4% bij <700K, 5% bij ≥700K, 6% bij ≥900K (per kwartaal)"
+    description: "4% at <700K, 5% at ≥700K, 6% at ≥900K (per quarter)"
     value_format_name: percent_0
   }
 
@@ -67,7 +70,7 @@ view: bing_ads_spend {
     type: number
     sql: ${total_spend} * ${payout_percentage} ;;
     label: "Payout"
-    description: "Spend × payout percentage. Filter op kwartaal voor correcte berekening."
+    description: "Spend × payout percentage. Filter on quarter for correct calculation."
     value_format_name: eur
   }
 }

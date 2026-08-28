@@ -11,14 +11,17 @@ view: hs_contact {
     type: time
     timeframes: [date, month, quarter, year]
     label: "Created"
+    description: "The date this contact was created in HubSpot"
     sql: ${TABLE}.created_at ;;
   }
 
   dimension: email {
+    description: "The contact's email address"
     sql: ${TABLE}.email ;;
   }
 
   dimension: name {
+    description: "The contact's full name"
     sql: ${TABLE}.name ;;
     link: {
       label: "Open in HubSpot"
@@ -27,18 +30,22 @@ view: hs_contact {
   }
 
   dimension: stage {
+    description: "The current HubSpot lifecycle stage of the contact"
     sql: ${TABLE}.lifecyclestage ;;
   }
 
   dimension: source {
+    description: "The original lead source of the contact"
     sql: ${TABLE}.lead_source ;;
   }
 
   dimension: company {
+    description: "The name of the company the contact belongs to"
     sql: ${TABLE}.companyname ;;
   }
 
   dimension: leadscore {
+    description: "The contact's HubSpot leadscore (engagement + fit)"
     sql: ${TABLE}.leadscore ;;
   }
 
@@ -46,7 +53,7 @@ view: hs_contact {
     order_by_field: leadscore_category_sort_order
     type: string
     label: "Leadscore category"
-    description: "Cold: ≤25 (incl. 0 en negatieve scores), Warming: 26–50, Warm: 51–75, Hot: ≥76 (geen bovengrens, leadscore = engagement + fit en kan boven 100 uitkomen, tot 161 gezien). 'Unknown' = geen leadscore (NULL). Let op: ~66% van alle contacten heeft een score van exact 0 — dat is vermoedelijk 'nog niet gescoord', niet een echte neutrale score (niet bevestigd bij wie de HubSpot-scoring beheert)."
+    description: "Cold: ≤25 (incl. 0 and negative scores), Warming: 26–50, Warm: 51–75, Hot: ≥76 (no upper bound, leadscore = engagement + fit and can exceed 100, up to 161 observed). 'Unknown' = no leadscore (NULL). Note: ~66% of all contacts have a score of exactly 0 — this is presumably 'not yet scored', not a genuine neutral score (not confirmed with whoever manages the HubSpot scoring)."
     sql: CASE
       WHEN ${TABLE}.leadscore IS NULL THEN 'Unknown'
       WHEN ${TABLE}.leadscore <= 25 THEN 'Cold'
@@ -68,12 +75,14 @@ view: hs_contact {
   measure: average_leadscore {
     type: average
     label: "Avg Leadscore"
+    description: "Average HubSpot leadscore across contacts"
     sql: ${leadscore} ;;
     value_format_name: decimal_0
   }
 
   measure: count {
     type: count_distinct
+    description: "Count of distinct contacts"
     sql: ${id} ;;
     drill_fields: [name, email, company, stage]
   }

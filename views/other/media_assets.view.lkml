@@ -4,16 +4,19 @@ view: media_assets {
   dimension: id {
     primary_key: yes
     type: number
+    description: "The media asset record ID"
     sql: ${TABLE}.id ;;
   }
 
   dimension: name {
     type: string
+    description: "The name of the media asset"
     sql: ${TABLE}.name ;;
   }
 
   dimension: description {
     type: string
+    description: "The description of the media asset"
     sql: ${TABLE}.description ;;
   }
 
@@ -22,11 +25,13 @@ view: media_assets {
     type: time
     timeframes: [date, month, quarter, year]
     datatype: date
+    description: "The date the media asset was produced"
     sql: ${TABLE}.production_date ;;
   }
 
   dimension: active {
     type: yesno
+    description: "Whether the media asset is currently active"
     sql: ${TABLE}.active ;;
   }
 
@@ -38,6 +43,7 @@ view: media_assets {
 
   dimension: status_label {
     label: "Status"
+    description: "The current status of the media asset"
     type: string
     sql: ${TABLE}.status_label ;;
   }
@@ -50,6 +56,7 @@ view: media_assets {
 
   dimension: media_asset_type_name {
     label: "Media asset type"
+    description: "The type/category of the media asset"
     type: string
     sql: ${TABLE}.media_asset_type_name ;;
   }
@@ -62,6 +69,7 @@ view: media_assets {
 
   dimension: customer_name {
     label: "Customer"
+    description: "The name of the customer the media asset belongs to"
     type: string
     sql: ${TABLE}.customer_name ;;
   }
@@ -99,6 +107,7 @@ view: media_assets {
 
   dimension: reporter_name {
     label: "Reporter"
+    description: "The name of the person who reported/created the media asset"
     type: string
     sql: ${TABLE}.reporter_name ;;
   }
@@ -111,6 +120,7 @@ view: media_assets {
 
   measure: count {
     type: count_distinct
+    description: "Count of distinct media assets"
     sql: ${id} ;;
     drill_fields: [name, department_name, customer_name, reporter_name, production_month]
   }

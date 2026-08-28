@@ -11,6 +11,7 @@ view: hs_contact_conversions {
   dimension: contact_id {
     primary_key: yes
     type: string
+    description: "The HubSpot contact ID"
     sql: ${TABLE}.contact_id ;;
     link: {
       label: "Open in HubSpot"
@@ -19,6 +20,7 @@ view: hs_contact_conversions {
   }
 
   dimension: email {
+    description: "The contact's email address"
     sql: ${TABLE}.email ;;
   }
 
@@ -37,7 +39,7 @@ view: hs_contact_conversions {
     type: time
     timeframes: [date, month, quarter]
     label: "Lead First"
-    description: "Exacte timestamp waarop dit contact voor het eerst de Lead-stage bereikte (sinds 2026-08-03 op stage-wijziging-niveau, niet meer maand-afgerond). NULL als nooit Lead."
+    description: "Exact timestamp when this contact first reached the Lead stage (since 2026-08-03 tracked at stage-change level, no longer month-rounded). NULL if never Lead."
     sql: ${TABLE}.lead_first_date ;;
   }
 
@@ -45,7 +47,7 @@ view: hs_contact_conversions {
     type: time
     timeframes: [date, month, quarter]
     label: "MQL First"
-    description: "Exacte timestamp waarop dit contact voor het eerst de MQL-stage bereikte (sinds 2026-08-03 op stage-wijziging-niveau, niet meer maand-afgerond). NULL als nooit MQL."
+    description: "Exact timestamp when this contact first reached the MQL stage (since 2026-08-03 tracked at stage-change level, no longer month-rounded). NULL if never MQL."
     sql: ${TABLE}.mql_first_date ;;
   }
 
@@ -53,7 +55,7 @@ view: hs_contact_conversions {
     type: time
     timeframes: [date, month, quarter]
     label: "SQL First"
-    description: "Exacte timestamp waarop dit contact voor het eerst de SQL-stage bereikte (sinds 2026-08-03 op stage-wijziging-niveau, niet meer maand-afgerond). NULL als nooit SQL."
+    description: "Exact timestamp when this contact first reached the SQL stage (since 2026-08-03 tracked at stage-change level, no longer month-rounded). NULL if never SQL."
     sql: ${TABLE}.sql_first_date ;;
   }
 
@@ -61,7 +63,7 @@ view: hs_contact_conversions {
     type: time
     timeframes: [date, month, quarter]
     label: "Opportunity First"
-    description: "Exacte timestamp waarop dit contact voor het eerst de Opportunity-stage bereikte (sinds 2026-08-03 op stage-wijziging-niveau, niet meer maand-afgerond). NULL als nooit Opportunity."
+    description: "Exact timestamp when this contact first reached the Opportunity stage (since 2026-08-03 tracked at stage-change level, no longer month-rounded). NULL if never Opportunity."
     sql: ${TABLE}.opportunity_first_date ;;
   }
 
@@ -104,7 +106,7 @@ view: hs_contact_conversions {
     hidden: yes
     type: yesno
     label: "Converted: Lead → MQL"
-    description: "TRUE als dit contact na Lead ook daadwerkelijk MQL werd. NULL als contact nooit Lead is geweest."
+    description: "TRUE if this contact, after Lead, actually became MQL. NULL if the contact was never Lead."
     sql: ${TABLE}.converted_lead_to_mql ;;
   }
 
@@ -112,7 +114,7 @@ view: hs_contact_conversions {
     hidden: yes
     type: yesno
     label: "Converted: MQL → SQL"
-    description: "TRUE als dit contact na MQL ook daadwerkelijk SQL werd. NULL als contact nooit MQL is geweest."
+    description: "TRUE if this contact, after MQL, actually became SQL. NULL if the contact was never MQL."
     sql: ${TABLE}.converted_mql_to_sql ;;
   }
 
@@ -120,7 +122,7 @@ view: hs_contact_conversions {
     hidden: yes
     type: yesno
     label: "Converted: SQL → Opportunity"
-    description: "TRUE als dit contact na SQL ook daadwerkelijk Opportunity werd. NULL als contact nooit SQL is geweest."
+    description: "TRUE if this contact, after SQL, actually became Opportunity. NULL if the contact was never SQL."
     sql: ${TABLE}.converted_sql_to_opportunity ;;
   }
 
@@ -128,7 +130,7 @@ view: hs_contact_conversions {
     hidden: yes
     type: yesno
     label: "Converted: MQL → Opportunity (direct)"
-    description: "TRUE als dit contact na MQL alsnog Opportunity werd, ongeacht of SQL is doorlopen. Praktisch bruikbaar omdat de meerderheid van contacten de SQL-stage overslaat (zie datakwaliteit-noot in contact_funnel_stages/Log 2026-07-30). NULL als contact nooit MQL is geweest."
+    description: "TRUE if this contact, after MQL, eventually became Opportunity, regardless of whether it passed through SQL. Practically useful because the majority of contacts skip the SQL stage (see data-quality note in contact_funnel_stages/Log 2026-07-30). NULL if the contact was never MQL."
     sql: ${TABLE}.converted_mql_to_opportunity_direct ;;
   }
 
@@ -141,6 +143,7 @@ view: hs_contact_conversions {
   measure: count {
     type: count_distinct
     label: "# Contacts"
+    description: "Count of distinct contacts"
     sql: ${contact_id} ;;
     drill_fields: [contact_id, email]
   }
@@ -148,6 +151,7 @@ view: hs_contact_conversions {
   measure: lead_count {
     type: count_distinct
     label: "# Leads"
+    description: "Count of distinct contacts that have ever reached the Lead stage"
     sql: ${contact_id} ;;
     filters: [is_lead: "yes"]
     drill_fields: [contact_id, email, lead_first_date]
@@ -156,6 +160,7 @@ view: hs_contact_conversions {
   measure: mql_count {
     type: count_distinct
     label: "# MQLs"
+    description: "Count of distinct contacts that have ever reached the MQL stage"
     sql: ${contact_id} ;;
     filters: [is_mql: "yes"]
     drill_fields: [contact_id, email, mql_first_date]
@@ -164,6 +169,7 @@ view: hs_contact_conversions {
   measure: sql_count {
     type: count_distinct
     label: "# SQLs"
+    description: "Count of distinct contacts that have ever reached the SQL stage"
     sql: ${contact_id} ;;
     filters: [is_sql: "yes"]
     drill_fields: [contact_id, email, sql_first_date]
@@ -172,6 +178,7 @@ view: hs_contact_conversions {
   measure: opportunity_count {
     type: count_distinct
     label: "# Opportunities"
+    description: "Count of distinct contacts that have ever reached the Opportunity stage"
     sql: ${contact_id} ;;
     filters: [is_opportunity: "yes"]
     drill_fields: [contact_id, email, opportunity_first_date]
@@ -185,6 +192,7 @@ view: hs_contact_conversions {
   measure: lead_to_mql_converted_count {
     type: count_distinct
     label: "# Lead → MQL Converted"
+    description: "Count of distinct contacts that converted from Lead to MQL (per-contact verified)"
     sql: ${contact_id} ;;
     filters: [converted_lead_to_mql: "yes"]
     drill_fields: [contact_id, hs_contact.name, email, hs_contact.company, lead_first_date, mql_first_date]
@@ -193,6 +201,7 @@ view: hs_contact_conversions {
   measure: mql_to_sql_converted_count {
     type: count_distinct
     label: "# MQL → SQL Converted"
+    description: "Count of distinct contacts that converted from MQL to SQL (per-contact verified)"
     sql: ${contact_id} ;;
     filters: [converted_mql_to_sql: "yes"]
     drill_fields: [contact_id, hs_contact.name, email, hs_contact.company, mql_first_date, sql_first_date]
@@ -201,6 +210,7 @@ view: hs_contact_conversions {
   measure: sql_to_opportunity_converted_count {
     type: count_distinct
     label: "# SQL → Opportunity Converted"
+    description: "Count of distinct contacts that converted from SQL to Opportunity (per-contact verified)"
     sql: ${contact_id} ;;
     filters: [converted_sql_to_opportunity: "yes"]
     drill_fields: [contact_id, hs_contact.name, email, hs_contact.company, sql_first_date, opportunity_first_date]
@@ -209,6 +219,7 @@ view: hs_contact_conversions {
   measure: mql_to_opportunity_direct_converted_count {
     type: count_distinct
     label: "# MQL → Opportunity Converted (Direct)"
+    description: "Count of distinct contacts that converted from MQL directly to Opportunity, regardless of whether SQL was reached (per-contact verified)"
     sql: ${contact_id} ;;
     filters: [converted_mql_to_opportunity_direct: "yes"]
     drill_fields: [contact_id, hs_contact.name, email, hs_contact.company, mql_first_date, opportunity_first_date]
@@ -226,7 +237,7 @@ view: hs_contact_conversions {
   measure: lead_to_mql_pct {
     type: number
     label: "Lead → MQL %"
-    description: "% van de Leads (in de gefilterde periode/selectie) dat ook daadwerkelijk MQL werd, ongeacht wanneer dat gebeurde. Let op censoring: recente cohorts hebben nog weinig tijd gehad om te converteren."
+    description: "% of Leads (in the filtered period/selection) that actually became MQL, regardless of when that happened. Note censoring: recent cohorts have had little time to convert yet."
     sql: SAFE_DIVIDE(${lead_to_mql_converted_count}, ${lead_count}) ;;
     value_format_name: percent_1
   }
@@ -234,7 +245,7 @@ view: hs_contact_conversions {
   measure: mql_to_sql_pct {
     type: number
     label: "MQL → SQL %"
-    description: "% van de MQL's (in de gefilterde periode/selectie) dat ook daadwerkelijk SQL werd, ongeacht wanneer dat gebeurde. Let op censoring: recente cohorts hebben nog weinig tijd gehad om te converteren."
+    description: "% of MQLs (in the filtered period/selection) that actually became SQL, regardless of when that happened. Note censoring: recent cohorts have had little time to convert yet."
     sql: SAFE_DIVIDE(${mql_to_sql_converted_count}, ${mql_count}) ;;
     value_format_name: percent_1
   }
@@ -242,7 +253,7 @@ view: hs_contact_conversions {
   measure: sql_to_opportunity_pct {
     type: number
     label: "SQL → Opportunity %"
-    description: "% van de SQL's (in de gefilterde periode/selectie) dat ook daadwerkelijk Opportunity werd, ongeacht wanneer dat gebeurde. Kleine steekproef (zie # SQLs) — interpreteer met voorzichtigheid."
+    description: "% of SQLs (in the filtered period/selection) that actually became Opportunity, regardless of when that happened. Small sample size (see # SQLs) — interpret with caution."
     sql: SAFE_DIVIDE(${sql_to_opportunity_converted_count}, ${sql_count}) ;;
     value_format_name: percent_1
   }
@@ -250,7 +261,7 @@ view: hs_contact_conversions {
   measure: mql_to_opportunity_direct_pct {
     type: number
     label: "MQL → Opportunity % (Direct)"
-    description: "% van de MQL's dat alsnog Opportunity werd, ongeacht of SQL is doorlopen. Praktisch relevanter dan MQL→SQL→Opportunity omdat de meeste contacten SQL overslaan (zie datakwaliteit-noot)."
+    description: "% of MQLs that eventually became Opportunity, regardless of whether SQL was passed through. More practically relevant than MQL→SQL→Opportunity because most contacts skip SQL (see data-quality note)."
     sql: SAFE_DIVIDE(${mql_to_opportunity_direct_converted_count}, ${mql_count}) ;;
     value_format_name: percent_1
   }

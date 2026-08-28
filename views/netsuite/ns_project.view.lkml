@@ -38,12 +38,14 @@ view: ns_project {
 
   dimension: project_name {
     label: "Project"
+    description: "The name of the NetSuite project"
     type: string
     sql: ${TABLE}.project_name ;;
   }
 
   dimension: project_type {
     label: "Project type"
+    description: "The NetSuite job type of the project"
     type: string
     sql: ${TABLE}.jobtype ;;
   }
